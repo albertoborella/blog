@@ -1,0 +1,32 @@
+{% extends 'nucleo/base.html' %}
+{% load static %}
+{% block content %}
+<article class="blog-post">
+    <div class="col-auto d-none d-lg-block">
+        <img src="{{ post.imagen.url }}" class="img-fluid rounded" style="width: 100%;"  alt="">
+    </div>
+    <strong class="d-inline-block mb-2 mt-3 text-primary categoria"><a href="{% url 'categoria' %}?cat={{ post.categoria.id }}">{{ post.categoria }}</a></strong>
+    <h4 class="blog-post-title mb-1">{{ post.titulo }}</h4>
+    <p class="autor-fecha">{{ post.created|date:'d M Y' }} por <a class="autor-fecha" href="{% url 'autor' %}?aut={{ post.autor.id }}">{{ post.autor }}</a></p>
+
+    <p>{{ post.bajada }}</p>
+    <hr>
+    <p>{{ post.contenido | safe }}</p>
+</article>
+<hr>
+<strong>Etiquetas</strong>
+{% for etiqueta in post.etiquetas.all %}
+    <span class="badge text-bg-info">{{ etiqueta.name|upper }}</span>
+{% endfor %}
+
+<div class="my-3 mb-3">
+    <a class="btn btn-success rounded-pill" href={% url 'home' %}>Volver a inicio</a>
+    {% comment %}
+    {% if request.user == post.autor %}
+    {% endcomment %}
+    {% if request.user.is_staff %}
+    <a class="btn btn-danger rounded-pill float-end" href={% url 'delete' post.id %}>Eliminar</a>
+    <a class="btn btn-info rounded-pill float-end" href={% url 'update' post.id %}>Editar</a>
+    {% endif %}
+</div>
+{% endblock %}

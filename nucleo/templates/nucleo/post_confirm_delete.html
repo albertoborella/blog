@@ -1,0 +1,25 @@
+{% extends 'nucleo/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  {% include 'nucleo/includes/submenu.html' %}
+<div class="mb-5">
+  <h3>Borrar Post</h3>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="card text-bg-danger mb-3" style="max-width: 18rem;">
+          <div class="card-header">Confirmar acción</div>
+          <div class="card-body">
+            <h5 class="card-title">Borrando Post...</h5>
+            <p class="card-text">Desea borrar definitivamente el Post {{ post }} </p>
+            <div class="text-center">
+              <input type="submit" value="Eliminar Post" class="btn btn-light">
+              <a class="btn btn-sm" type="submit" href="{% url 'home' %}">Cancelar</a>
+            </div>
+          </div>
+        </div>
+    </form>
+</div>
+  
+{% endblock %}
